@@ -74,26 +74,29 @@
 }
 
 .product__body{
-  @include flexStart;
+  @include flexSpaceBetween;
   align-items: start;
 }
 
 .product__images{
   position: relative;
+  padding: 0 20px;
 
   img{
-    height: 300px;
+    height: 350px;
     min-width: fit-content;
-    max-width: 300px;
+    max-width: 350px;
   }
 }
 
 .images__decrement{
   position: absolute;
+  cursor: pointer;
 }
 
 .images__increment{
   position: absolute;
+  cursor: pointer;
 }
 
 .product__info{
@@ -102,10 +105,12 @@
 
 .info__title{
   @include bigFontH2;
+  margin-bottom: 5px;
 }
 
 .info__price{
   @include bigFontH3;
+  margin-bottom: $mainMediumMargin;
 }
 
 .info__description{
@@ -122,6 +127,7 @@
 
 .colors__color{
   cursor: pointer;
+  margin-bottom: $mainMediumMargin;
 
   &:not(:last-child){
     margin-right: $mainMediumMargin;
@@ -140,21 +146,29 @@
 }
 
 .actions__sizes{
-
+  @include flexStart;
+  margin-bottom: $mainBigMargin;
 }
 
 .sizes__size{
+  cursor: pointer;
 
+  &:not(:last-child){
+    margin-right: $mainMediumMargin;
+  }
 }
 
 .sizes__label{
-
+  @include fontSize5;
 }
 
 .sizes__number{
-
+  @include fontSize5;
 }
 
 .actions__buy{
-
+  @include fontSize6;
+  padding: 10px 25px;
+  background-color: white;
+  border-radius: 15px;
 }
