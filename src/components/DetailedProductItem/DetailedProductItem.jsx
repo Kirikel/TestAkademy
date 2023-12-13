@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import BucketIcon from "../../Svg/BucketIcon";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {getProduct, getProductColor, getSize, getSizes} from "../../services/api";
 import bucketStore from "../../store/BucketStore";
 import {observer} from "mobx-react-lite";
 
 const DetailedProductItem = observer(() => {
     const navigate = useNavigate()
-    const [params] = useSearchParams()
-    const productId = params.get("productId")
+    const {productId} = useParams()
 
     const [product, setProduct] = useState(null);
     const [productByColor, setProductByColor] = useState(null);
@@ -46,9 +45,9 @@ const DetailedProductItem = observer(() => {
         getProduct(productId)
             .then(productItem => {
                 handleOnProduct(productItem)
-                handleOnCurrentColorId(productItem.colors[0].id)
+                handleOnCurrentColorId(productItem.colors[0]?.id)
 
-                getProductColor(productId, productItem.colors[0].id)
+                getProductColor(productId, productItem.colors[0]?.id)
                     .then(pByColor => handleOnProductByColor(pByColor))
             })
 
@@ -56,7 +55,7 @@ const DetailedProductItem = observer(() => {
             .then(sizesList => {
                 handleOnSizes(sizesList)
 
-                getSize(sizesList[0].id)
+                getSize(sizesList[0]?.id)
                     .then(size => handleOnCurrentSize(size))
             })
     }, [])
@@ -96,7 +95,7 @@ const DetailedProductItem = observer(() => {
             images: productByColor?.images,
         }
 
-        return productByColor?.sizes?.length !== 0 && productByColor?.sizes.includes(currentSize.id) &&
+        return productByColor?.sizes?.length !== 0 && productByColor?.sizes.includes(currentSize?.id) &&
             bucketStore.bucketItems.findIndex(item => JSON.stringify(item) === JSON.stringify(bucketItem)) === -1;
 
     }

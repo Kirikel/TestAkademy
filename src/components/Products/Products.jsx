@@ -36,7 +36,7 @@ const Products = () => {
                     {
                         products.map((product, index) =>
                             <li key={index} className="products__item"
-                                onClick={() => navigate(`/productItem?productId=${product.id}`)}>
+                                onClick={() => navigate(`/productItem/${product.id}`)}>
                                 <ProductItem product={product}/>
                             </li>
                         )
