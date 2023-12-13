@@ -1,0 +1,199 @@
+// Fonts
+
+@mixin fontH0 {
+  font-size: 56px;
+  line-height: 64px;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@mixin fontH1 {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@mixin fontH2 {
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+
+@mixin fontH3 {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@mixin fontH4 {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@mixin fontH5 {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+@mixin fontSize1 {
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize2 {
+  font-size: 11px;
+  line-height: 16px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize3 {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize4 {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize5 {
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize6 {
+  font-size: 18px;
+  line-height: 26px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize7 {
+  font-size: 20px;
+  line-height: 28px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin fontSize8 {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+@mixin bigFontH1 {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+@mixin bigFontH2 {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+
+@mixin bigFontH3 {
+  font-size: 24px;
+  line-height: 32px;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+
+// Display
+
+@mixin flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flexStart {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+@mixin flexSpaceBetween {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flexCenterColumn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@mixin flexStartColumn {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@mixin flexSpaceBetweenColumn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+// OTHER
+
+$containerBigPadding: 60px;
+$containerMediumPadding: 45px;
+$containerSmallPadding: 30px;
+
+$mainBigPadding: 50px;
+$mainMediumPadding: 25px;
+$mainSmallPadding: 15px;
+$mainSmallestPadding: 10px;
+
+$mainBigMargin: 50px;
+$mainMediumMargin: 25px;
+$mainSmallMargin: 15px;
+$mainSmallestMargin: 10px;
+
+$mainFontColor: #14191A;
+$mainBackgroundColor: #E7E8E8;
+
+@mixin container {
+  max-width: calc(1600px + $containerBigPadding*2);
+  margin: 0 auto;
+  padding: 0 $containerBigPadding*2;
+}
+
+@mixin pageStyles{
+  width: 100vw;
+  max-width: 100vw;
+  min-height: 100vh;
+  max-height: 100%;
+  background-color: $mainBackgroundColor;
+  color: $mainFontColor;
+  overflow-x: hidden;
+}

@@ -1,0 +1,160 @@
+@import "./Variables";
+
+// Products
+
+
+.products{
+  @include pageStyles;
+}
+
+.products__container{
+  @include container;
+  padding-top: $mainBigPadding;
+  padding-bottom: $mainBigPadding;
+}
+
+.products__header{
+  @include flexSpaceBetween;
+  margin-bottom: $mainBigMargin;
+}
+
+.products__title{
+  @include bigFontH1;
+}
+
+.products__bucket{
+  cursor: pointer;
+}
+
+.products__items{
+  @include flexStart;
+  justify-content: space-evenly;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.products__item {
+  @include fontSize8;
+  cursor: pointer;
+
+  p {
+    text-align: center;
+  }
+
+  img{
+    height: 250px;
+    min-width: fit-content;
+    max-width: 350px;
+  }
+}
+
+// Product
+
+.product{
+  @include pageStyles;
+}
+
+.product__container{
+  @include container;
+  padding-top: $mainBigPadding;
+  padding-bottom: $mainBigPadding;
+}
+
+.product__header{
+  @include flexSpaceBetween;
+  margin-bottom: $mainBigMargin;
+}
+
+.product__title{
+  @include bigFontH1;
+}
+
+.product__bucket{
+  cursor: pointer;
+}
+
+.product__body{
+  @include flexStart;
+  align-items: start;
+}
+
+.product__images{
+  position: relative;
+
+  img{
+    height: 300px;
+    min-width: fit-content;
+    max-width: 300px;
+  }
+}
+
+.images__decrement{
+  position: absolute;
+}
+
+.images__increment{
+  position: absolute;
+}
+
+.product__info{
+  @include flexStartColumn;
+}
+
+.info__title{
+  @include bigFontH2;
+}
+
+.info__price{
+  @include bigFontH3;
+}
+
+.info__description{
+  @include fontSize7;
+}
+
+.product__actions{
+  @include flexStartColumn;
+}
+
+.actions__colors{
+  @include flexStart;
+}
+
+.colors__color{
+  cursor: pointer;
+
+  &:not(:last-child){
+    margin-right: $mainMediumMargin;
+  }
+}
+
+.colors__image{
+  height: 100px;
+  min-width: fit-content;
+  max-width: 100px;
+}
+
+.colors__title{
+  @include fontH4;
+  text-align: center;
+}
+
+.actions__sizes{
+
+}
+
+.sizes__size{
+
+}
+
+.sizes__label{
+
+}
+
+.sizes__number{
+
+}
+
+.actions__buy{
+
+}
