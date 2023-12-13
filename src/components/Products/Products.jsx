@@ -10,7 +10,7 @@ import bucketStore from "../../store/BucketStore";
 const Products = () => {
     const navigate = useNavigate()
     const [products, setProducts] = useState([]);
-    const handleOnProducts = useCallback((productList) => setProducts(productList), [],);
+    const handleOnProducts = useCallback((productList) => setProducts(productList), []);
 
     useEffect(() => {
         getProducts()

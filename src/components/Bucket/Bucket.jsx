@@ -1,8 +1,9 @@
 import React from 'react';
 import bucketStore from "../../store/BucketStore";
 import {useNavigate} from "react-router-dom";
+import {observer} from "mobx-react-lite"
 
-const Bucket = () => {
+const Bucket = observer(() => {
     const navigate = useNavigate()
 
     return (
@@ -33,7 +34,8 @@ const Bucket = () => {
                                 <p className="bucket__item-text">
                                     цена:&nbsp;{item.price}
                                 </p>
-                                <button className="bucket__item-delete">
+                                <button className="bucket__item-delete"
+                                        onClick={() => bucketStore.deleteFromBucket(item)}>
                                     Удалить
                                 </button>
                             </div>
@@ -43,6 +45,6 @@ const Bucket = () => {
             </div>
         </main>
     );
-};
+});
 
 export default Bucket;

@@ -13,8 +13,9 @@ class BucketStore {
         this.bucketItems.push(product)
     }
 
-    deleteFromBucket() {
-
+    deleteFromBucket(itemToDelete) {
+        const itemToDeleteIndex = this.bucketItems.findIndex(item => JSON.stringify(item) === JSON.stringify(itemToDelete))
+        this.bucketItems.splice(itemToDeleteIndex, 1)
     }
 }
 

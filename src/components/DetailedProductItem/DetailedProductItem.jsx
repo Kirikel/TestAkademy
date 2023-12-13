@@ -1,12 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import BucketIcon from "../../Svg/BucketIcon";
-import ProductItem from "../ProductItem/Productitem";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {getProduct, getProductColor, getSize, getSizes} from "../../services/api";
-import products from "../Products/Products";
 import bucketStore from "../../store/BucketStore";
+import {observer} from "mobx-react-lite";
 
-const DetailedProductItem = () => {
+const DetailedProductItem = observer(() => {
     const navigate = useNavigate()
     const [params] = useSearchParams()
     const productId = params.get("productId")
@@ -17,11 +16,6 @@ const DetailedProductItem = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [currentSize, setCurrentSize] = useState(null);
     const [sizes, setSizes] = useState([]);
-    const [bucketLength, setBucketLength] = useState(0);
-
-
-    // BucketLengthAction
-    const handleOnBucketLength = useCallback(() => setBucketLength(bucketStore.bucketItems.length), [])
 
     // ProductAction
     const handleOnProduct = useCallback((p) => setProduct(p), [])
@@ -93,6 +87,20 @@ const DetailedProductItem = () => {
             return ""
     }
 
+    function conditionsToShowBucket() {
+        const bucketItem = {
+            productName: product?.name,
+            color: productByColor?.name,
+            size: currentSize?.label,
+            price: productByColor?.price,
+            images: productByColor?.images,
+        }
+
+        return productByColor?.sizes?.length !== 0 && productByColor?.sizes.includes(currentSize.id) &&
+            bucketStore.bucketItems.findIndex(item => JSON.stringify(item) === JSON.stringify(bucketItem)) === -1;
+
+    }
+
     return (
         <main className="product">
             <div className="product__container">
@@ -109,19 +117,19 @@ const DetailedProductItem = () => {
                          onClick={() => navigate("/bucket")}>
                         <BucketIcon/>
                         <p className="bucket__count">
-                            {bucketLength}
+                            {bucketStore.bucketItems.length}
                         </p>
                     </div>
                 </header>
                 {
-                    productByColor
+                    productByColor?.images
                         ?
                         <div className="product__body">
                             <div className="product__images">
                                 <button className="images__decrement"
                                         onClick={handleOnDecCurrentImageIndex}>
                                 </button>
-                                <img src={productByColor?.images[currentImageIndex]} alt="Изображение продукта"/>
+                                <img src={productByColor.images[currentImageIndex]} alt="Изображение продукта"/>
                                 <button className="images__increment"
                                         onClick={handleOnIncCurrentImageIndex}>
                                 </button>
@@ -129,22 +137,22 @@ const DetailedProductItem = () => {
                             <div className="product__info">
                                 <h2 className="info__title">
                                     {
-                                        productByColor.name
+                                        productByColor?.name
                                     }
                                 </h2>
                                 <h3 className="info__price">
-                                    {productByColor.price}&nbsp;р
+                                    {productByColor?.price}&nbsp;р
                                 </h3>
                                 <p className="info__description">
                                     {
-                                        productByColor.description
+                                        productByColor?.description
                                     }
                                 </p>
                             </div>
                             <div className="product__actions">
                                 <div className="actions__colors">
                                     {
-                                        product
+                                        product?.colors
                                             ?
                                             product.colors.map((pByColor, ind) =>
                                                 <div className={`colors__color 
@@ -163,7 +171,7 @@ const DetailedProductItem = () => {
                                 </div>
                                 <div className="actions__sizes">
                                     {
-                                        productByColor && sizes
+                                        sizes
                                             ?
                                             sizes.map((size, ind) =>
                                                 <div className={`sizes__size ${getSizeStyle(size)}`}
@@ -185,22 +193,20 @@ const DetailedProductItem = () => {
                                     }
                                 </div>
                                 {
-                                    productByColor.sizes.length === 0
-                                        ? ""
-                                        :
-                                        <button className="actions__buy"
-                                                onClick={() => {
-                                                    bucketStore.addToBucket({
-                                                        productName: product.name,
-                                                        color: productByColor.name,
-                                                        size: currentSize.label,
-                                                        price: productByColor.price,
-                                                        images: productByColor.images,
-                                                    })
-                                                    handleOnBucketLength()
-                                                }}>
+                                    conditionsToShowBucket()
+                                        ? <button className="actions__buy"
+                                                  onClick={() => {
+                                                      bucketStore.addToBucket({
+                                                          productName: product?.name,
+                                                          color: productByColor?.name,
+                                                          size: currentSize?.label,
+                                                          price: productByColor?.price,
+                                                          images: productByColor?.images,
+                                                      })
+                                                  }}>
                                             Добавить в корзину
                                         </button>
+                                        : ""
                                 }
                             </div>
                         </div>
@@ -209,6 +215,6 @@ const DetailedProductItem = () => {
             </div>
         </main>
     );
-};
+});
 
 export default DetailedProductItem;
