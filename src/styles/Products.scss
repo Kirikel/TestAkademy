@@ -24,11 +24,11 @@
 
 .products__bucket{
   cursor: pointer;
+  position: relative;
 }
 
 .products__items{
   @include flexStart;
-  justify-content: space-evenly;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -36,6 +36,11 @@
 .products__item {
   @include fontSize8;
   cursor: pointer;
+  margin-bottom: $mainMediumMargin;
+
+  &:not(:last-child){
+    margin-right: $mainBigMargin;
+  }
 
   p {
     text-align: center;
@@ -43,8 +48,9 @@
 
   img{
     height: 250px;
-    min-width: fit-content;
-    max-width: 350px;
+    width: 200px;
+    object-fit: cover;
+    background-position: center;
   }
 }
 
@@ -65,12 +71,23 @@
   margin-bottom: $mainBigMargin;
 }
 
+.header__left{
+  @include flexStart;
+  align-items: end;
+
+  p{
+    cursor: pointer;
+  }
+}
+
 .product__title{
   @include bigFontH1;
+  margin-right: $mainMediumMargin;
 }
 
 .product__bucket{
   cursor: pointer;
+  position: relative;
 }
 
 .product__body{
@@ -80,23 +97,48 @@
 
 .product__images{
   position: relative;
-  padding: 0 20px;
+  padding: 0 30px;
 
   img{
+    border-radius: 15px;
     height: 350px;
-    min-width: fit-content;
-    max-width: 350px;
+    width: 300px;
+    object-fit: cover;
+    background-position: center;
   }
 }
 
 .images__decrement{
   position: absolute;
   cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url("../Svg/LeftDirection.svg") center no-repeat;
+  background-size: contain;
+  top: 50%;
+  left: -10px;
+  transform: translate(0, -50%);
+  transition: none;
+
+  &:hover, &:active, &:focus{
+    transform: translate(0, -50%);
+  }
 }
 
 .images__increment{
   position: absolute;
   cursor: pointer;
+  width: 20px;
+  height: 20px;
+  background: url("../Svg/RightDirection.svg") center no-repeat;
+  background-size: contain;
+  top: 50%;
+  right: -10px;
+  transform: translate(0, -50%);
+
+  &:hover, &:active, &:focus{
+    transform: translate(0, -50%);
+  }
 }
 
 .product__info{
@@ -128,13 +170,21 @@
 .colors__color{
   cursor: pointer;
   margin-bottom: $mainMediumMargin;
+  padding: 5px;
+  border-radius: 15px;
+  background-color: white;
 
   &:not(:last-child){
     margin-right: $mainMediumMargin;
   }
 }
 
+.color__current{
+  background-color: lightblue;
+}
+
 .colors__image{
+  border-radius: 15px;
   height: 100px;
   min-width: fit-content;
   max-width: 100px;
@@ -146,29 +196,131 @@
 }
 
 .actions__sizes{
-  @include flexStart;
+  @include flexCenter;
   margin-bottom: $mainBigMargin;
 }
 
 .sizes__size{
   cursor: pointer;
+  padding: 5px;
+  width: 40px;
+  border-radius: 15px;
+  background-color: white;
 
   &:not(:last-child){
     margin-right: $mainMediumMargin;
   }
 }
 
+.size__current{
+  background-color: lightblue;
+}
+
+.size__notAvailable{
+  cursor: default;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .sizes__label{
   @include fontSize5;
+  text-align: center;
 }
 
 .sizes__number{
   @include fontSize5;
+  text-align: center;
 }
 
 .actions__buy{
   @include fontSize6;
   padding: 10px 25px;
   background-color: white;
+  border: 1px solid #565656;
   border-radius: 15px;
+  margin-left: 5px;
+}
+
+// Bucket
+
+.bucket{
+  @include pageStyles;
+}
+
+.bucket__container{
+  @include container;
+  padding-top: $mainBigPadding;
+  padding-bottom: $mainBigPadding;
+}
+
+.bucket__left{
+  margin-bottom: $mainBigMargin;
+  @include flexStart;
+  align-items: end;
+
+  p{
+    cursor: pointer;
+  }
+}
+
+.bucket__title{
+  @include bigFontH1;
+  margin-right: $mainMediumMargin;
+}
+
+.bucket__count{
+  @include fontSize7;
+  @include flexCenter;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: lightblue;
+  color: $mainFontColor;
+  border-radius: 50%;
+  top: -15px;
+  right: -25px;
+}
+
+.bucket__items{
+  @include flexStart;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.bucket__item{
+  @include flexCenterColumn;
+  align-items: center;
+  justify-content: start;
+  width: 200px;
+  height: 200px;
+  margin-bottom: $mainMediumMargin;
+
+  &:not(:last-child){
+    margin-right: $mainBigMargin;
+  }
+
+  img{
+    width: 200px;
+    height: 250px;
+    object-fit: cover;
+    background-position: center;
+    margin-bottom: 5px;
+  }
+}
+
+.bucket__item-title{
+  @include fontH2;
+  margin-bottom: 5px;
+}
+
+.bucket__item-text{
+  @include fontSize6;
+  margin-bottom: 5px;
+}
+
+.bucket__item-delete{
+  border-radius: 25px;
+  padding: 5px 25px;
+  background-color: white;
+  border: 1px solid #565656;
+  color: #d7062f;
 }

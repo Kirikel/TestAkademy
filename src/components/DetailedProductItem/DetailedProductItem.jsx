@@ -4,6 +4,7 @@ import ProductItem from "../ProductItem/Productitem";
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {getProduct, getProductColor, getSize, getSizes} from "../../services/api";
 import products from "../Products/Products";
+import bucketStore from "../../store/BucketStore";
 
 const DetailedProductItem = () => {
     const navigate = useNavigate()
@@ -16,6 +17,11 @@ const DetailedProductItem = () => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [currentSize, setCurrentSize] = useState(null);
     const [sizes, setSizes] = useState([]);
+    const [bucketLength, setBucketLength] = useState(0);
+
+
+    // BucketLengthAction
+    const handleOnBucketLength = useCallback(() => setBucketLength(bucketStore.bucketItems.length), [])
 
     // ProductAction
     const handleOnProduct = useCallback((p) => setProduct(p), [])
@@ -24,10 +30,14 @@ const DetailedProductItem = () => {
     const handleOnProductByColor = useCallback((pByColor) => setProductByColor(pByColor), [])
 
     // ImageIndexActions
-    const handleOnIncCurrentImageIndex = useCallback(() =>
-        setCurrentImageIndex(currentImageIndex + 1), [currentImageIndex])
-    const handleOnDecCurrentImageIndex = useCallback(() =>
-        setCurrentImageIndex(currentImageIndex - 1), [currentImageIndex])
+    const handleOnIncCurrentImageIndex = useCallback(() => {
+        if (currentImageIndex < productByColor?.images.length - 1)
+            setCurrentImageIndex(currentImageIndex + 1)
+    }, [currentImageIndex, productByColor?.images.length])
+    const handleOnDecCurrentImageIndex = useCallback(() => {
+        if (currentImageIndex > 0)
+            setCurrentImageIndex(currentImageIndex - 1)
+    }, [currentImageIndex])
 
     // CurrentColorIdAction
     const handleOnCurrentColorId = useCallback((colorId) => setCurrentColorId(colorId), [])
@@ -67,23 +77,40 @@ const DetailedProductItem = () => {
     }
 
     function onChangeSize(sizeId) {
-        if (sizeId !== currentSize.id) {
+        if (sizeId !== currentSize?.id && productByColor.sizes.includes(sizeId)) {
             getSize(sizeId)
                 .then(size => handleOnCurrentSize(size))
-        } else
+        } else if (sizeId === currentSize?.id)
             alert("Вы не можете выбрать этот размер, так как он уже выбран")
+    }
+
+    function getSizeStyle(size) {
+        if (!productByColor.sizes.includes(size?.id))
+            return "size__notAvailable"
+        else if (size?.id === currentSize?.id)
+            return "size__current"
+        else
+            return ""
     }
 
     return (
         <main className="product">
             <div className="product__container">
                 <header className="product__header">
-                    <h1 className="product__title">
-                        {product?.name}
-                    </h1>
+                    <div className="header__left">
+                        <h1 className="product__title">
+                            {product?.name}
+                        </h1>
+                        <p onClick={() => navigate("/")}>
+                            Назад
+                        </p>
+                    </div>
                     <div className="product__bucket"
                          onClick={() => navigate("/bucket")}>
                         <BucketIcon/>
+                        <p className="bucket__count">
+                            {bucketLength}
+                        </p>
                     </div>
                 </header>
                 {
@@ -120,7 +147,9 @@ const DetailedProductItem = () => {
                                         product
                                             ?
                                             product.colors.map((pByColor, ind) =>
-                                                <div className="colors__color" key={ind}
+                                                <div className={`colors__color 
+                                                ${pByColor.id === currentColorId ? "color__current" : ""}`}
+                                                     key={ind}
                                                      onClick={() => onChangeColor(pByColor.id)}>
                                                     <img src={pByColor.images[0]} alt={pByColor.name}
                                                          className="colors__image"/>
@@ -134,10 +163,11 @@ const DetailedProductItem = () => {
                                 </div>
                                 <div className="actions__sizes">
                                     {
-                                        productByColor
+                                        productByColor && sizes
                                             ?
                                             sizes.map((size, ind) =>
-                                                <div className="sizes__size" key={ind}
+                                                <div className={`sizes__size ${getSizeStyle(size)}`}
+                                                     key={ind}
                                                      onClick={() => onChangeSize(size.id)}>
                                                     <div className="sizes__label">
                                                         {
@@ -154,9 +184,24 @@ const DetailedProductItem = () => {
                                             : ""
                                     }
                                 </div>
-                                <button className="actions__buy">
-                                    Добавить в корзину
-                                </button>
+                                {
+                                    productByColor.sizes.length === 0
+                                        ? ""
+                                        :
+                                        <button className="actions__buy"
+                                                onClick={() => {
+                                                    bucketStore.addToBucket({
+                                                        productName: product.name,
+                                                        color: productByColor.name,
+                                                        size: currentSize.label,
+                                                        price: productByColor.price,
+                                                        images: productByColor.images,
+                                                    })
+                                                    handleOnBucketLength()
+                                                }}>
+                                            Добавить в корзину
+                                        </button>
+                                }
                             </div>
                         </div>
                         : ""

@@ -4,11 +4,11 @@ import ProductItem from "../ProductItem/Productitem";
 import "../../styles/Products.scss"
 import BucketIcon from "../../Svg/BucketIcon";
 import {useNavigate} from "react-router-dom";
+import bucketStore from "../../store/BucketStore";
 
 
 const Products = () => {
     const navigate = useNavigate()
-
     const [products, setProducts] = useState([]);
     const handleOnProducts = useCallback((productList) => setProducts(productList), [],);
 
@@ -27,6 +27,9 @@ const Products = () => {
                     <div className="products__bucket"
                          onClick={() => navigate("/bucket")}>
                         <BucketIcon/>
+                        <p className="bucket__count">
+                            {bucketStore.bucketItems.length}
+                        </p>
                     </div>
                 </header>
                 <ul className="products__items">
