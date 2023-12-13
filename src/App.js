@@ -9,7 +9,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Products/>}/>
-        <Route path="/productItem" element={<DetailedProductItem/>}/>
+        <Route path="/productItem/:productId" element={<DetailedProductItem/>}/>
         <Route path="/bucket" element={<Bucket/>}/>
       </Routes>
     </BrowserRouter>
