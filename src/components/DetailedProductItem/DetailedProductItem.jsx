@@ -16,13 +16,10 @@ const DetailedProductItem = observer(() => {
     const [currentSize, setCurrentSize] = useState(null);
     const [sizes, setSizes] = useState([]);
 
-    // ProductAction
     const handleOnProduct = useCallback((p) => setProduct(p), [])
 
-    // ProductByColorIdAction
     const handleOnProductByColor = useCallback((pByColor) => setProductByColor(pByColor), [])
 
-    // ImageIndexActions
     const handleOnIncCurrentImageIndex = useCallback(() => {
         if (currentImageIndex < productByColor?.images.length - 1)
             setCurrentImageIndex(currentImageIndex + 1)
@@ -32,13 +29,10 @@ const DetailedProductItem = observer(() => {
             setCurrentImageIndex(currentImageIndex - 1)
     }, [currentImageIndex])
 
-    // CurrentColorIdAction
     const handleOnCurrentColorId = useCallback((colorId) => setCurrentColorId(colorId), [])
 
-    // CurrentSizeIdAction
     const handleOnCurrentSize = useCallback((size) => setCurrentSize(size), [])
 
-    // SizesAction
     const handleOnSizes = useCallback((sizesList) => setSizes(sizesList), [])
 
     useEffect(() => {
